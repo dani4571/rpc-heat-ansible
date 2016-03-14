@@ -211,17 +211,17 @@ resources:
           - python-apt
           - python-dev
         write_files:
-          - path: /opt/cloud-training/id_rsa
+          - path: /opt/cba/id_rsa
             permissions: "0600"
             content: { get_attr: [ keypair, private_key ] }
-          - path: /opt/cloud-training/inventory
+          - path: /opt/cba/inventory
             permissions: "0600"
             content:
               str_replace:
                 template: |
                   [all:vars]
                   ansible_ssh_user=root
-                  ansible_ssh_private_key_file=/opt/cloud-training/id_rsa
+                  ansible_ssh_private_key_file=/opt/cba/id_rsa
                   heat_stack_prefix=%heat_stack_prefix%
                   heat_stack_id=%heat_stack_id%
                   heat_stack_name=%heat_stack_name%
@@ -277,7 +277,7 @@ resources:
                   "%server_compute1_ip%":        { get_attr: [ server_compute1, accessIPv4 ] }
                   "%server_block1_ip%":          { get_attr: [ server_block1, accessIPv4 ] }
                   "%server_object1_ip%":         { get_attr: [ server_object1, accessIPv4 ] }
-          - path: /opt/cloud-training/runcmd-bash
+          - path: /opt/cba/runcmd-bash
             permissions: "0700"
             content:
               str_replace:
@@ -318,13 +318,13 @@ resources:
                   /usr/bin/pip install --upgrade pip || exit_failure "PIP Upgrade PIP Failure"
                   /usr/local/bin/pip install pip==1.5.6 || exit_failure "PIP Install PIP Failure"
                   install_ansible
-                  cd /opt/cloud-training
+                  cd /opt/cba
                   # BEGIN - Terrible Chicken Egg Hack
                   export MY_PUBLIC_IP=`curl -s http://ipv4.icanhazip.com/`
                   sed -i "s/ansible_connection=local/ansible_ssh_host=$MY_PUBLIC_IP/" inventory
                   # END - Terrible Chicken Egg Hack
                   git clone %rpc_heat_ansible_repo% -b %rpc_heat_ansible_release% || exit_failure "Git Clone Failure"
-                  cd /opt/cloud-training/rpc-heat-ansible/playbooks
+                  cd /opt/cba/rpc-heat-ansible/playbooks
                   if [[ "%rpc_heat_ansible_repo%" != "https://github.com/cloud-training/rpc-heat-ansible.git" ]]; then
                     git remote add upstream https://github.com/cloud-training/rpc-heat-ansible.git
                   fi
@@ -342,13 +342,13 @@ resources:
           - tmux new-window -n runcmd-bash-logs
           - tmux new-window -n deploy-sh-logs
           - tmux select-window -t runcmd-bash-logs
-          - tmux send-keys "touch /opt/cloud-training/runcmd-bash.err /opt/cloud-training/runcmd-bash.log" C-m
-          - tmux send-keys "multitail /opt/cloud-training/runcmd-bash.err /opt/cloud-training/runcmd-bash.log" C-m
+          - tmux send-keys "touch /opt/cba/runcmd-bash.err /opt/cba/runcmd-bash.log" C-m
+          - tmux send-keys "multitail /opt/cba/runcmd-bash.err /opt/cba/runcmd-bash.log" C-m
           - tmux select-window -t deploy-sh-logs
-          - tmux send-keys "touch /opt/cloud-training/deploy.sh.err /opt/cloud-training/deploy.sh.log" C-m
-          - tmux send-keys "multitail /opt/cloud-training/deploy.sh.err /opt/cloud-training/deploy.sh.log" C-m
+          - tmux send-keys "touch /opt/cba/deploy.sh.err /opt/cba/deploy.sh.log" C-m
+          - tmux send-keys "multitail /opt/cba/deploy.sh.err /opt/cba/deploy.sh.log" C-m
           - tmux select-window -t runcmd-bash
-          - tmux send-keys "/opt/cloud-training/runcmd-bash >> /opt/cloud-training/runcmd-bash.log 2>> /opt/cloud-training/runcmd-bash.err" C-m
+          - tmux send-keys "/opt/cba/runcmd-bash >> /opt/cba/runcmd-bash.log 2>> /opt/cba/runcmd-bash.err" C-m
 
   cloud_config_logger1:
     type: OS::Heat::CloudConfig

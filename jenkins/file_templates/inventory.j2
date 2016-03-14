@@ -1,0 +1,31 @@
+[all:vars]
+ansible_ssh_user=root
+ansible_ssh_private_key_file=/opt/cba/id_rsa
+heat_stack_prefix={{ heat_stack_prefix }}
+heat_stack_id={{ heat_stack_id }}
+heat_stack_name={{ heat_stack_name }}
+heat_stack_password={{ heat_stack_password }}
+rackspace_cloud_auth_url={{ rackspace_cloud_auth_url }}
+rackspace_cloud_tenant_id={{ rackspace_cloud_tenant_id }}
+rackspace_cloud_username={{ rackspace_cloud_username }}
+rackspace_cloud_password={{ rackspace_cloud_password }}
+rackspace_cloud_api_key={{ rackspace_cloud_api_key }}
+rpc_release={{ rpc_release }}
+apply_patches={{ apply_patches }}
+deploy_retries={{ deploy_retries }}
+maas_notification_plan={{ maas_notification_plan }}
+
+[all]
+infra1      ansible_connection=local    node_id=1
+{% set count = 2 %}
+{% for name, ip in nodes.iteritems() if not name == 'infra1' %}
+{{ name }} ansible_ssh_host={{ ip }} node_id={{ count }}
+{% set count = count + 1 %}
+{% endfor %}
+
+{% for name, ip in nodes.iteritems() %}
+[{{ name }}]
+{{ name }}
+{% endfor %}
+
+[ceph]

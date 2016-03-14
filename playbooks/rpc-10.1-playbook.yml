@@ -327,7 +327,7 @@
       git: repo=https://github.com/openstack/openstack-ansible.git dest=/opt/openstack-ansible version={{ rpc_release }} force=yes
 
     - name: Bugs - Apply Patches (OpenStack Ansible)
-      command: git apply /opt/cloud-training/rpc-heat-ansible/playbooks/files/patches/{{ item }} chdir=/opt/openstack-ansible
+      command: git apply /opt/cba/rpc-heat-ansible/playbooks/files/patches/{{ item }} chdir=/opt/openstack-ansible
       when: apply_patches | bool
       ignore_errors: yes
       with_items:

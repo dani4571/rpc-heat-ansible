@@ -334,13 +334,13 @@
       git: repo=https://github.com/rcbops/rpc-openstack dest=/opt/rpc-openstack version={{ rpc_release }} recursive=yes force=yes
 
     - name: Bugs - Apply Patches (OpenStack Ansible)
-      command: git apply /opt/cloud-training/rpc-heat-ansible/playbooks/files/patches/{{ item }} chdir=/opt/rpc-openstack/openstack-ansible
+      command: git apply /opt/cba/rpc-heat-ansible/playbooks/files/patches/{{ item }} chdir=/opt/rpc-openstack/openstack-ansible
       when: apply_patches | bool
       ignore_errors: yes
       with_items: []
 
     - name: Bugs - Apply Patches (RPC OpenStack)
-      command: git apply /opt/cloud-training/rpc-heat-ansible/playbooks/files/patches/{{ item }} chdir=/opt/rpc-openstack
+      command: git apply /opt/cba/rpc-heat-ansible/playbooks/files/patches/{{ item }} chdir=/opt/rpc-openstack
       when: apply_patches | bool
       ignore_errors: yes
       with_items:
@@ -494,7 +494,7 @@
     - tempest
   tasks:
     - name:
-      shell: ./scripts/deploy.sh >> /opt/cloud-training/deploy.sh.log 2>> /opt/cloud-training/deploy.sh.err chdir=/opt/rpc-openstack/
+      shell: ./scripts/deploy.sh >> /opt/cba/deploy.sh.log 2>> /opt/cba/deploy.sh.err chdir=/opt/rpc-openstack/
       register: deploy_result
       until: deploy_result.rc == 0
       retries: "{{ deploy_retries }}"
