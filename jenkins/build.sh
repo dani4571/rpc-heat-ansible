@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #set -ex
-
+z
 sudo pip install python-heatclient
 sudo pip install oslo.config
 
@@ -25,6 +25,8 @@ else
 fi
 
 STACK_NAME=rpc-jenkins-$BUILD_NUMBER-install-`echo $RPC_RELEASE | sed 's/\./-/g'`-$HEAT_ENVIRONMENT-$PATCH_STATUS
+
+echo "heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES $STACK_NAME"
 
 heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES $STACK_NAME
 
@@ -73,27 +75,27 @@ if [[ $BUILD_FAILED -eq 1 && $SWIFT_SIGNAL_FAILED -gt 0 || ( $BUILD_FAILED -eq 0
   grep -e "fatal: \[" -e "failed: \[" -e "msg: " -e "\.\.\.ignoring" -e "stderr: " -e "stdout: " -e "OSError: " -e "UndefinedError: " -e ", W:" -e ", E:" -e "PLAY" -e " Entity:" -e " Check:" -e " Alarm:" runcmd-bash.log deploy.sh.log
 fi
 
-BUILD_DELETED=1
-echo "===================================================="
-heat stack-delete $STACK_NAME
-
-until [[ $BUILD_DELETED -eq 0 ]]; do
-  sleep 30
-  STACK_STATUS=`heat stack-list | awk '/ '$STACK_NAME' / { print $6 }'`
-  BUILD_DELETED=`heat stack-list | awk '/ '$STACK_NAME' / { print $6 }' | wc -l`
-  echo "===================================================="
-  echo "Stack Status:        $STACK_STATUS"
-  echo "Build Deleted:       $BUILD_DELETED"
-  if [[ "$STACK_STATUS" != 'DELETE_IN_PROGRESS' ]]; then
-    if [[ "$STACK_STATUS" == 'DELETE_FAILED' ]]; then
-      NETWORK_ID=`heat resource-list $STACK_NAME | awk '/ OS::Neutron::Net / { print $4 }'`
-      for PORT_ID in `rack networks port list --network-id $NETWORK_ID --fields id --no-header`; do
-        rack networks port delete --id $PORT_ID
-        sleep 20
-      done
-    fi
-    heat stack-delete $STACK_NAME
-  fi
-done
-
+#BUILD_DELETED=1
+#echo "===================================================="
+#heat stack-delete $STACK_NAME
+#
+#until [[ $BUILD_DELETED -eq 0 ]]; do
+#  sleep 30
+#  STACK_STATUS=`heat stack-list | awk '/ '$STACK_NAME' / { print $6 }'`
+#  BUILD_DELETED=`heat stack-list | awk '/ '$STACK_NAME' / { print $6 }' | wc -l`
+#  echo "===================================================="
+#  echo "Stack Status:        $STACK_STATUS"
+#  echo "Build Deleted:       $BUILD_DELETED"
+#  if [[ "$STACK_STATUS" != 'DELETE_IN_PROGRESS' ]]; then
+#    if [[ "$STACK_STATUS" == 'DELETE_FAILED' ]]; then
+#      NETWORK_ID=`heat resource-list $STACK_NAME | awk '/ OS::Neutron::Net / { print $4 }'`
+#      for PORT_ID in `rack networks port list --network-id $NETWORK_ID --fields id --no-header`; do
+#        rack networks port delete --id $PORT_ID
+#        sleep 20
+#      done
+#    fi
+#    heat stack-delete $STACK_NAME
+#  fi
+#done
+#
 exit $BUILD_FAILED
