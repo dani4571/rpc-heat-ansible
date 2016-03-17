@@ -36,7 +36,7 @@ get_rpc_series $RPC_RELEASE
 install_ansible
 cd /opt/cba
 # BEGIN - Terrible Chicken Egg Hack
-export MY_PUBLIC_IP=`curl -s http://ipv4.icanhazip.com/`
+export MY_PUBLIC_IP=$INFRA_IP
 sed -i "s/ansible_connection=local/ansible_ssh_host=$MY_PUBLIC_IP/" inventory
 # END - Terrible Chicken Egg Hack
 git clone $RPC_HEAT_ANSIBLE_REPO -b $RPC_HEAT_ANSIBLE_RELEASE || exit_failure "Git Clone Failure"
