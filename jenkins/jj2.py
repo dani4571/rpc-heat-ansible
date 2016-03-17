@@ -55,9 +55,6 @@ def main(argv=None):
 
     tvars.update(parse_cmdline_vars(args.var or []))
 
-    print tvars['nodes']
-    print "HEEREEE"
-
     tvars['nodes'] = json.loads(tvars['nodes'])
 
     # Fail on undefined

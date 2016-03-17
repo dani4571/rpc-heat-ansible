@@ -34,15 +34,15 @@ export STACK_PREFIX=`echo $STACK_ID | sed 's/-/ /' | awk '{print $1}'`
 
 cat <<EOF | tee OS_Env.txt
 PRIVATE_KEY=$PRIVATE_KEY
-ALL_IPS=$ALL_IPS
 INFRA_IP=$INFRA_IP
-DEPLOY_RETRIES=$DEPLOY_RETRIES
-APPLY_PATCHES=$APPLY_PATCHES
-RPC_RELEASE=$RPC_RELEASE
-STACK_PREFIX=$STACK_PREFIX
-STACK_ID=$STACK_ID
-STACK_NAME=$STACK_NAME
-STACK_PASSWORD=$PASSWORD
+nodes=$ALL_IPS
+deploy_retries=$DEPLOY_RETRIES
+apply_patches=$APPLY_PATCHES
+rpc_release=$RPC_RELEASE
+heat_stack_prefix=$STACK_PREFIX
+heat_stack_id=$STACK_ID
+heat_stack_name=$STACK_NAME
+heat_stack_password=$PASSWORD
 rackspace_cloud_auth_url=$OS_AUTH_URL
 rackspace_cloud_tenant_id=$OS_TENANT_ID
 rackspace_cloud_username=$OS_USERNAME
