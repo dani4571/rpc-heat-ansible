@@ -31,7 +31,9 @@ function install_ansible {
 }
 
 get_rpc_series $RPC_RELEASE
-/usr/bin/pip install --upgrade pip || exit_failure "PIP Upgrade PIP Failure"
+if [ -a /usr/bin/pip ] then
+  /usr/bin/pip install --upgrade pip || exit_failure "PIP Upgrade PIP Failure"
+fi
 /usr/local/bin/pip install pip==1.5.6 || exit_failure "PIP Install PIP Failure"
 install_ansible
 cd /opt/cba
