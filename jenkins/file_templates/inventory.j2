@@ -16,9 +16,8 @@ deploy_retries={{ deploy_retries }}
 maas_notification_plan={{ maas_notification_plan }}
 
 [all]
-infra1      ansible_connection=local    node_id=1
-{% set count = 2 %}
-{% for name, ip in nodes.iteritems() if not name == 'infra1' %}
+{% set count = 1 %}
+{% for name, ip in nodes.iteritems() %}
 {{ name }} ansible_ssh_host={{ ip }} node_id={{ count }}
 {% set count = count + 1 %}
 {% endfor %}
