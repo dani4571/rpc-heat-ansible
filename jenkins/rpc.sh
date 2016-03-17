@@ -38,6 +38,7 @@ fi
 /usr/local/bin/pip install pip==1.5.6 || exit_failure "PIP Install PIP Failure"
 install_ansible
 cd /opt/cba
+sudo rm -r $RPC_HEAT_ANSIBLE_REPO
 git clone $RPC_HEAT_ANSIBLE_REPO -b $RPC_HEAT_ANSIBLE_RELEASE || exit_failure "Git Clone Failure"
 cd /opt/cba/rpc-heat-ansible/playbooks
 if [[ "$RPC_HEAT_ANSIBLE_REPO" != "https://github.com/cloud-training/rpc-heat-ansible.git" ]]; then
