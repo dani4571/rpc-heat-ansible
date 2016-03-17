@@ -30,8 +30,12 @@ export INFRA_IP=`heat output-show $STACK_NAME server_infra1_ip -F raw`
 export ALL_IPS=`heat output-show $STACK_NAME all_ips -F raw`
 export STACK_ID=`heat stack-list  | grep $STACK_NAME | awk '{print $2}'`
 export STACK_PREFIX=`echo $STACK_ID | sed 's/-/ /' | awk '{print $1}'`
+export MAAS_NOTIFICATION_PLAN=`heat resource-list $STACK_NAME | grep Rackspace::CloudMonitoring::NotificationPlan | awk '{print $4}'`
 
 
+
+
+#VARS AFTER RPC_RELEASE WILL GO AWAY
 cat <<EOF | tee OS_Env.txt
 PRIVATE_KEY=$PRIVATE_KEY
 INFRA_IP=$INFRA_IP
@@ -48,6 +52,7 @@ rackspace_cloud_tenant_id=$OS_TENANT_ID
 rackspace_cloud_username=$OS_USERNAME
 rackspace_cloud_password=$OS_PASSWORD
 rackspace_cloud_api_key=$RS_API_KEY
+maas_notification_plan=$MAAS_NOTIFICATION_PLAN
 EOF
 
 
