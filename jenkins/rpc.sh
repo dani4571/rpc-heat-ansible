@@ -37,10 +37,6 @@ fi
 /usr/local/bin/pip install pip==1.5.6 || exit_failure "PIP Install PIP Failure"
 install_ansible
 cd /opt/cba
-# BEGIN - Terrible Chicken Egg Hack
-export MY_PUBLIC_IP=$INFRA_IP
-sed -i "s/ansible_connection=local/ansible_ssh_host=$MY_PUBLIC_IP/" inventory
-# END - Terrible Chicken Egg Hack
 git clone $RPC_HEAT_ANSIBLE_REPO -b $RPC_HEAT_ANSIBLE_RELEASE || exit_failure "Git Clone Failure"
 cd /opt/cba/rpc-heat-ansible/playbooks
 if [[ "$RPC_HEAT_ANSIBLE_REPO" != "https://github.com/cloud-training/rpc-heat-ansible.git" ]]; then
