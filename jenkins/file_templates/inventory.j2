@@ -19,24 +19,13 @@ maas_notification_plan={{ maas_notification_plan }}
 infra1      ansible_connection=local    node_id=1
 {% set count = 2 %}
 {% for name, ip in nodes.iteritems() if not name == 'infra1' %}
-<<<<<<< HEAD
 {{ name }} ansible_ssh_host={{ ip }} node_id={{ count }}
 {% set count = count + 1 %}
-=======
-
-{{ name }} ansible_ssh_host={{ ip }} node_id={{ count }}
-{% set count = count + 1 %}
-
->>>>>>> 1c15dcecd4adda0b71df4935dc23064f41a95219
 {% endfor %}
 
 {% for name, ip in nodes.iteritems() %}
 [{{ name }}]
 {{ name }}
-<<<<<<< HEAD
-=======
-
->>>>>>> 1c15dcecd4adda0b71df4935dc23064f41a95219
 {% endfor %}
 
 [ceph]
