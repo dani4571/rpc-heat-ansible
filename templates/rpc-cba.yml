@@ -339,7 +339,7 @@ resources:
                   #terrible chicken and egg problem
                   export MY_PUBLIC_IP=`curl -s http://ipv4.icanhazip.com/`
                   wget http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar || exit_failure "Downloading Jenkins Swarm Jar Failed"
-                  screen -dmS swarm java -jar swarm-client-2.0-jar-with-dependencies.jar -master %jenkins_master% -username %jenkins_user% -password %jenkins_password% -name $MY_PUBLIC_IP
+                  screen -dmS swarm java -jar swarm-client-2.0-jar-with-dependencies.jar -master %jenkins_master% -username %jenkins_user% -password %jenkins_password% -name $MY_PUBLIC_IP -disableClientsUniqueId
                   exit_success
                 params:
                   "%swift_signal_notify%": { get_attr: [ swift_signal_handle_infra1, curl_cli ] }
