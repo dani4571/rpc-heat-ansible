@@ -38,11 +38,16 @@ fi
 /usr/local/bin/pip install pip==1.5.6 || exit_failure "PIP Install PIP Failure"
 install_ansible
 cd /opt/cba
-sudo rm -r rpc-heat-ansible
-git clone $RPC_HEAT_ANSIBLE_REPO -b $RPC_HEAT_ANSIBLE_RELEASE || exit_failure "Git Clone Failure"
-cd /opt/cba/rpc-heat-ansible/playbooks
-if [[ "$RPC_HEAT_ANSIBLE_REPO" != "https://github.com/cloud-training/rpc-heat-ansible.git" ]]; then
+sudo rm -r $RPC_CI_REPO
+git clone $RPC_CI_ENDPOINT -b $RPC_CI_RELEASE || exit_failure "Git Clone Failure"
+cd /opt/cba/$RPC_CI_REPO/playbooks
+if [[ "$RPC_CI_ENDPOINT" != "https://github.com/cloud-training/rpc-heat-ansible.git" ]]; then
   git remote add upstream https://github.com/cloud-training/rpc-heat-ansible.git
 fi
 ansible-playbook rpc-$RPC_SERIES-playbook.yml -v --tags $ANSIBLE_TAG || exit_failure "Ansible Playbook Run Failure"
+
+cat <<EOF | tee OS_Env.txt
+ALL_IPS=$ALL_IPS
+EOF
+
 exit_success

@@ -26,9 +26,9 @@ fi
 
 STACK_NAME=rpc-jenkins-$BUILD_NUMBER-install-`echo $RPC_RELEASE | sed 's/\./-/g'`-$HEAT_ENVIRONMENT-$PATCH_STATUS
 
-echo "heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES -P build_number=$BUILD_NUMBER -P jenkins_master=$JENKINS_URL -P jenkins_user=$JENKINS_USER -P jenkins_password=$JENKINS_PASSWORD $STACK_NAME"
+echo "heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_ci_endpoint=$RPC_CI_ENDPOINT -P rpc_ci_release=$RPC_CI_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES -P build_number=$BUILD_NUMBER -P jenkins_master=$JENKINS_URL -P jenkins_user=$JENKINS_USER -P jenkins_password=$JENKINS_PASSWORD $STACK_NAME"
 
-heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES -P build_number=$BUILD_NUMBER -P jenkins_master="$JENKINS_URL" -P jenkins_user=$JENKINS_USER -P jenkins_password=$JENKINS_PASSWORD $STACK_NAME
+heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_ci_endpoint=$RPC_CI_ENDPOINT -P rpc_ci_release=$RPC_CI_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES -P build_number=$BUILD_NUMBER -P jenkins_master="$JENKINS_URL" -P jenkins_user=$JENKINS_USER -P jenkins_password=$JENKINS_PASSWORD $STACK_NAME
 
 BUILD_COMPLETED=0
 BUILD_FAILED=0
@@ -100,6 +100,9 @@ STACK_PREFIX=$STACK_PREFIX
 STACK_ID=$STACK_ID
 PASSWORD=$PASSWORD
 ANSIBLE_TAG=$ANSIBLE_TAG
+RPC_CI_REPO=$RPC_CI_REPO
+RPC_CI_ENDPOINT=$RPC_CI_ENDPOINT
+RPC_CI_RELEASE=$RPC_CI_RELEASE
 
 nodes=$ALL_IPS
 deploy_retries=$DEPLOY_RETRIES

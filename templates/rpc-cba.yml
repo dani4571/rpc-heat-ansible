@@ -31,13 +31,13 @@ parameters:
     type: string
     label: RPC Release
     default: 'r11.1.4'
-  rpc_heat_ansible_release:
+  rpc_ci_release:
     type: string
     label: RPC Heat Ansible Release
     default: 'master'
-  rpc_heat_ansible_repo:
+  rpc_ci_endpoint:
     type: string
-    label: RPC Heat Ansible Repo
+    label: RPC Heat Ansible Endpoint
     default : 'https://github.com/cloud-training/rpc-heat-ansible.git'
   rackspace_cloud_auth_url:
     type: string
@@ -344,8 +344,8 @@ resources:
                 params:
                   "%swift_signal_notify%": { get_attr: [ swift_signal_handle_infra1, curl_cli ] }
                   "%ansible_tags%": { get_param: "ansible_tags" }
-                  "%rpc_heat_ansible_release%": { get_param: "rpc_heat_ansible_release" }
-                  "%rpc_heat_ansible_repo%": { get_param: "rpc_heat_ansible_repo" }
+                  "%rpc_ci_release%": { get_param: "rpc_ci_release" }
+                  "%rpc_ci_endpoint%": { get_param: "rpc_ci_endpoint" }
                   "%rpc_release%": { get_param: "rpc_release" }
                   "%jenkins_master%": { get_param: "jenkins_master" }
                   "%jenkins_user%": { get_param: "jenkins_user" }
