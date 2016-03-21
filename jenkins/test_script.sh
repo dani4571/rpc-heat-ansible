@@ -1,5 +1,5 @@
 
-<<HEAT_SCRIPT
+: '
 #set -ex
 sudo pip install python-heatclient
 sudo pip install oslo.config
@@ -68,8 +68,7 @@ rackspace_cloud_password=$OS_PASSWORD
 rackspace_cloud_api_key=$RS_API_KEY
 maas_notification_plan=$MAAS_NOTIFICATION_PLAN
 EOF
-
-HEAT_SCRIPT
+'
 
 echo "from file"
 echo $RPC_RELEASE
