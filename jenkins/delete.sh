@@ -7,6 +7,13 @@ sudo pip install oslo.config
 # Environment Binding
 $PUBLIC_CLOUD_CREDENTIALS
 
+if [[ "$APPLY_PATCHES" == "True" ]]; then
+    PATCH_STATUS="patched"
+elif [[ "$APPLY_PATCHES" == "False" ]]; then
+    PATCH_STATUS="unpatched"
+fi
+
+
 STACK_NAME=rpc-jenkins-$CREATE_BUILD_NUMBER-install-`echo $RPC_RELEASE | sed 's/\./-/g'`-$HEAT_ENVIRONMENT-$PATCH_STATUS
 
 BUILD_DELETED=1
