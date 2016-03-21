@@ -5,7 +5,7 @@ function exit_failure {
   echo '{"status": "FAILURE", "reason": "'"$@"'"}'
   if [[ "$@" == "Ansible Playbook Run Failure" ]]; then
     echo "==========================ANSIBLE RPC OUTPUT=========================="
-    echo /opt/cba/deploy.sh.log
+    cat /opt/cba/deploy.sh.log
     echo "======================================================================"
   fi
   exit 1
