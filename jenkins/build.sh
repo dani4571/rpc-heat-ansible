@@ -26,9 +26,9 @@ fi
 
 STACK_NAME=rpc-jenkins-$BUILD_NUMBER-install-`echo $RPC_RELEASE | sed 's/\./-/g'`-$HEAT_ENVIRONMENT-$PATCH_STATUS
 
-echo "heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES $STACK_NAME"
+echo "heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_repo='https://github.com/dani4571/rpc-heat-ansible.git' -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES $STACK_NAME"
 
-heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES $STACK_NAME
+heat stack-create -t 240 -f templates/rpc-$HEAT_TEMPLATE.yml -e environments/rpc-$RPC_SERIES-$HEAT_ENVIRONMENT.yml -e $HEAT_ENVIRONMENT_MAAS_CREDENTIALS -P rpc_release=$RPC_RELEASE -P rpc_heat_ansible_repo='https://github.com/dani4571/rpc-heat-ansible.git' -P rpc_heat_ansible_release=$RPC_HEAT_ANSIBLE_RELEASE -P apply_patches=$APPLY_PATCHES -P deploy_retries=$DEPLOY_RETRIES $STACK_NAME
 
 BUILD_COMPLETED=0
 BUILD_FAILED=0
