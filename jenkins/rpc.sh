@@ -3,7 +3,7 @@ set -e
 set -x
 function exit_failure {
   echo '{"status": "FAILURE", "reason": "'"$@"'"}'
-  if [[ "$@" == "Ansible Playbook Run Failure" ]]
+  if [[ "$@" == "Ansible Playbook Run Failure" ]]; then
     echo "==========================ANSIBLE RPC OUTPUT=========================="
     echo /opt/cba/deploy.sh.log
     echo "======================================================================"
