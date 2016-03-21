@@ -22,7 +22,7 @@ else
     RPC_SERIES=`echo $RPC_RELEASE | sed 's/^r//g' | awk -F '[\.]' '{ print $1 "." $2 }'`
 fi
 
-STACK_NAME='rpc-jenkins-52-install-liberty-12-0-full-net-patched'
+STACK_NAME='rpc-jenkins-$CREATE_BUILD_NUMBER-install-liberty-12-0-full-net-patched'
 
 export PASSWORD=`heat output-show $STACK_NAME password -F raw`
 export PRIVATE_KEY=`heat output-show $STACK_NAME private_key -F raw`
