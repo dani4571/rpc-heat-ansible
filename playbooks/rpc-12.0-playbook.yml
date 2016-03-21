@@ -215,6 +215,8 @@
         - sudo
         - tcpdump
         - vlan
+        - libssl-dev
+        - swig
 
     - name: Create Physical Volumes
       command: pvcreate --metadatasize 2048 {{ item.device }}
