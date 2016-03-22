@@ -51,4 +51,6 @@ ALL_IPS=$ALL_IPS
 ENV_NAME=$ENV_NAME
 EOF
 
+cp OS_Env.txt $WORKSPACE
+
 exit_success
