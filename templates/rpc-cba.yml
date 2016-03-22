@@ -336,20 +336,19 @@ resources:
                     fi
                     /usr/local/bin/pip install ansible==$ANSIBLE_VERSION || exit_failure "PIP Install Ansible Failure"
                   }
-                  #terrible chicken and egg problem
-                  export MY_PUBLIC_IP=`curl -s http://ipv4.icanhazip.com/`
                   wget http://repo.jenkins-ci.org/releases/org/jenkins-ci/plugins/swarm-client/2.0/swarm-client-2.0-jar-with-dependencies.jar || exit_failure "Downloading Jenkins Swarm Jar Failed"
-                  screen -dmS swarm java -jar swarm-client-2.0-jar-with-dependencies.jar -master %jenkins_master% -username %jenkins_user% -password %jenkins_password% -name $MY_PUBLIC_IP -disableClientsUniqueId
+                  screen -dmS swarm java -jar swarm-client-2.0-jar-with-dependencies.jar -master %jenkins_master% -username %jenkins_user% -password %jenkins_password% -name %heat_stack_name% -disableClientsUniqueId
                   exit_success
                 params:
-                  "%swift_signal_notify%": { get_attr: [ swift_signal_handle_infra1, curl_cli ] }
-                  "%ansible_tags%": { get_param: "ansible_tags" }
-                  "%rpc_ci_release%": { get_param: "rpc_ci_release" }
-                  "%rpc_ci_endpoint%": { get_param: "rpc_ci_endpoint" }
-                  "%rpc_release%": { get_param: "rpc_release" }
-                  "%jenkins_master%": { get_param: "jenkins_master" }
-                  "%jenkins_user%": { get_param: "jenkins_user" }
-                  "%jenkins_password%": { get_param: "jenkins_password" }
+                  "%ansible_tags%":         { get_param: "ansible_tags" }
+                  "%heat_stack_name%":      { get_param: "OS::stack_name" }
+                  "%rpc_ci_release%":       { get_param: "rpc_ci_release" }
+                  "%rpc_ci_endpoint%":      { get_param: "rpc_ci_endpoint" }
+                  "%rpc_release%":          { get_param: "rpc_release" }
+                  "%jenkins_master%":       { get_param: "jenkins_master" }
+                  "%jenkins_user%":         { get_param: "jenkins_user" }
+                  "%jenkins_password%":     { get_param: "jenkins_password" }
+                  "%swift_signal_notify%":  { get_attr: [ swift_signal_handle_infra1, curl_cli ] }
         runcmd:
           - tmux new-session -s rpc-heat-ansible -d
           - tmux rename-window runcmd-bash
