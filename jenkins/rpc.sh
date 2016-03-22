@@ -48,6 +48,7 @@ ansible-playbook rpc-$RPC_SERIES-playbook.yml -v --tags $ANSIBLE_TAG || exit_fai
 
 cat <<EOF | tee OS_Env.txt
 ALL_IPS=$ALL_IPS
+ENV_NAME=$ENV_NAME
 EOF
 
 exit_success
