@@ -12,7 +12,7 @@ git clone $RPC_STATUS_ENDPOINT -b $RPC_STATUS_RELEASE || exit_failure "Git Clone
 cd $RPC_STATUS_REPO
 echo $ALL_IPS > control_plane.json
 
-$DATE=`date`
+DATE=`date`
 
 git add control_plane.json
 git commit -m "updating control plane $DATE"
