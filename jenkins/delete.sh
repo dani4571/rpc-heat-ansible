@@ -27,6 +27,9 @@ until [[ $BUILD_DELETED -eq 0 ]]; do
   echo "===================================================="
   echo "Stack Status:        $STACK_STATUS"
   echo "Build Deleted:       $BUILD_DELETED"
+  if [[ BUILD_DELETED -eq 0 ]]; then
+    exit
+  fi
   if [[ "$STACK_STATUS" != 'DELETE_IN_PROGRESS' ]]; then
     if [[ "$STACK_STATUS" == 'DELETE_FAILED' ]]; then
       NETWORK_ID=`heat resource-list $STACK_NAME | awk '/ OS::Neutron::Net / { print $4 }'`
@@ -40,3 +43,6 @@ until [[ $BUILD_DELETED -eq 0 ]]; do
 done
 
 exit
+
+
+
