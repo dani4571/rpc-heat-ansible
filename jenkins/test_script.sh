@@ -51,10 +51,6 @@ RPC_CI_REPO=$RPC_CI_REPO
 RPC_CI_ENDPOINT=$RPC_CI_ENDPOINT
 RPC_CI_RELEASE=$RPC_CI_RELEASE
 
-nodes=$ALL_IPS
-deploy_retries=$DEPLOY_RETRIES
-apply_patches=$APPLY_PATCHES
-rpc_release=$RPC_RELEASE
 heat_stack_prefix=$STACK_PREFIX
 heat_stack_id=$STACK_ID
 heat_stack_name=$STACK_NAME
