@@ -1,2 +1,2 @@
-bash /opt/openstack_tempest_gate.sh all
+bash /opt/openstack_tempest_gate.sh
 echo "TEMPEST_EXIT_CODE=$?"
